@@ -21,8 +21,8 @@ module.exports = {
           title: '开始都是大杂烩',
           collapsable: false,
           children: [
-            // 'Travis_CI',
-            // 'SSH_Login',
+            'Travis_CI',
+            'SSH_Login',
           ]
         },
         
