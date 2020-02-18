@@ -13,9 +13,9 @@ env:
 addons:
   ssh_known_hosts:
   - $REMOTE_IP
-after_success:
-- ssh $REMOTE_SERVER -o  "echo 'travis build done!' "
 before_install:
 - openssl aes-256-cbc -K $encrypted_800bf27b8633_key -iv $encrypted_800bf27b8633_iv
-  -in travis_notes_rsa.enc -out ~/.ssh/travis_notes_rsa -d
+  -in ./travis_notes_rsa.enc -out ~/.ssh/travis_notes_rsa -d
 - chmod 600 ~/.ssh/travis_notes_rsa
+after_success:
+- ssh $REMOTE_SERVER -o  "echo 'travis build done!' "
