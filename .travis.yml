@@ -1,17 +1,26 @@
 language: node_js
 node_js:
-  - lts/*
+- lts/*
 install:
-  - npm install # npm ci
+- npm install
 script:
-  - npm run docs:build # npm run docs:build
+- npm run docs:build
 deploy:
   provider: pages
   skip_cleanup: true
   local_dir: docs/.vuepress/dist
   target-branch: master
   repo: shownoso/shownoso.github.io
-  github_token: $GITHUB_TOKEN # 在 GitHub 中生成，用于允许 Travis 向你的仓库推送代码。在 Travis 的项目设置页面进行配置，设置为 Environment Variables
+  github_token: $GITHUB_TOKEN
   keep_history: true
   on:
     branch: master
+env:
+  global:
+    secure: TR0w8EjBOvFvJIiHPANyFqTmVTt2cqzwp/UwFZhBzueJPIX8p0n8rf2R9+14Tt+jK4F5nX7h/DKbvcB3IhBxBEjM68VWJr+iAoBRTNLLY2GKblmKxE53ayysZwbp/qA6/Tk/xYm2SCxy82IEU44HNqKrBIL7Qx0gysZVrLc5RJrB/EKRO0ogsIglnb4gIGPiVRvhkjzV8vzrbh8kANnRnYAdC9SwsU3S/TfWd8VPh1IVmoFi0cFDlnVTv0P+BcW91KkRv7u4xiRNS5+uRwIPStM2tr90XI7e1B9Ml/6PCy9zHFA6uBdVqXUN5C3XUjxsMEMTfrguKWSQvX9N0WyeNJ6SvFc5AmDl7jV8uPrS8EfhRF/+becXC955folf5oPjCKzPnpVa9fKAMwtM+WKgyqgdklV77VNPL6kFYPBUz/00Q0U59yEerlA8TAz8f3nenoqmJ83/9Azc/J7SXY1u5Ng31XkO5BFpGqa7giwraSn7bPI7go5trB8T1y1YcENVx64QZWN5KbDD+FNY6I9Cvwf1lc5iKNQWZjlKYuCz38RicRVCjdkmrK3wNP/iEoDDBTdXfrK1ii9wvkYwmDdaqLgECIFsKW5DxGxhuu0dSM/7DTZLU/21c/oMagwYTebbBrPfFM7hjvvUZcnt2qhZedj4TfB2zqNgsRXwcivuazw=
+before_install:
+- openssl aes-256-cbc -K $encrypted_800bf27b8633_key -iv $encrypted_800bf27b8633_iv
+  -in travis_notes_rsa.enc -out ~/.ssh/travis_notes_rsa -d
+- chmod 600 ~/.ssh/travis_notes_rsa
+after_success:
+- ssh root@101.37.145.181 -o  "echo 'travis build done!' "
